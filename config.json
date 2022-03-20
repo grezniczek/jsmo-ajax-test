@@ -1,0 +1,41 @@
+{
+    "name": "JSMO Ajax Test",
+    "namespace": "DE\\RUB\\JSMOAjaxTestExternalModule",
+    "description": "A REDCap EM for testing the general purpose JSMO.ajax() method.",
+    "documentation": "README.md",
+    "authors": [
+        {
+            "name": "Günther Rezniczek",
+            "email": "guenther.rezniczek@rub.de",
+            "institution": "Ruhr-Universität Bochum"
+        }
+    ],
+    "framework-version": 9,
+    "permissions": [
+        "redcap_every_page_top",
+        "redcap_data_entry_form",
+        "redcap_survey_page"
+    ],
+    "enable-every-page-hooks-on-system-pages": true,
+    "links": {
+        "project": [
+        ],
+        "system": [
+        ]
+    },
+    "system-settings": [
+        {
+            "key": "debug",
+            "name": "<b>Debug mode:</b><br>When enabled, debug information is output to the browser console",
+            "type": "checkbox"
+        }
+    ],
+    "project-settings": [
+    ],
+    "compatibility": {
+        "php-version-min": "7.4.0",
+        "php-version-max": "",
+        "redcap-version-min": "12.0.1",
+        "redcap-version-max": ""
+     }
+}
