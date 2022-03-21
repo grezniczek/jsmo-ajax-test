@@ -87,7 +87,7 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     #region Handle Ajax Requests
 
-    function redcap_module_ajax($action, $payload, $project_id, $record, $instrument, $event_id, $group_id, $survey_hash, $response_id, $repeat_instance) {
+    function redcap_module_ajax($action, $payload, $project_id, $record, $instrument, $event_id, $group_id, $survey_hash, $response_id, $repeat_instance, $page, $page_full) {
 
         if ($project_id == null) {
             $msg = "Success outside project context! Custom = {$payload["custom"]}";
@@ -107,6 +107,8 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
             "survey_hash" => $survey_hash,
             "response_id" => $response_id,
             "repeat_instance" => $repeat_instance,
+            "page" => $page,
+            "page_full" => $page_full,
         );
     }
 
