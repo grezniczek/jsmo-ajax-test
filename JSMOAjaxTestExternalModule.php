@@ -34,7 +34,7 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
         $this->setupJSMO("Survey [PID={$project_id}].");
     }
 
-    // Hook - All pages - TODO: Inject instructions
+    // Hook - All pages
     function redcap_every_page_top($project_id = null) {
         if ($project_id == null) {
             // System page
@@ -89,11 +89,27 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     function redcap_module_ajax($action, $payload, $project_id, $record, $instrument, $event_id, $group_id, $survey_hash, $response_id, $repeat_instance, $page, $page_full) {
 
+        $counter_key = "counter";
+
+        // Increment counters
         if ($project_id == null) {
-            $msg = "Success outside project context! Custom = {$payload["custom"]}";
+            $orig = $this->getSystemSetting($counter_key) ?? 0;
+            $orig = is_numeric($orig) ? $orig * 1 : 0;
+            $this->setSystemSetting($counter_key, $orig + 1);
+            $new = $this->getSystemSetting($counter_key) ?? 0;
         }
         else {
-            $msg = "Success in project {$project_id}! Custom = {$payload["custom"]}";
+            $orig = $this->getProjectSetting($counter_key) ?? 0;
+            $orig = is_numeric($orig) ? $orig * 1 : 0;
+            $this->setProjectSetting($counter_key, $orig + 1);
+            $new = $this->getProjectSetting($counter_key) ?? 0;
+        }
+
+        if ($project_id == null) {
+            $msg = "Success outside project context! Counter from {$orig} to {$new}. Custom = {$payload["custom"]}";
+        }
+        else {
+            $msg = "Success in project {$project_id}! Counter from {$orig} to {$new}. Custom = {$payload["custom"]}";
         }
         return array(
             "msg" => $msg,
