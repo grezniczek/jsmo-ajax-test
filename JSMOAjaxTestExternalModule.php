@@ -92,17 +92,22 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
         $counter_key = "counter";
 
         // Increment counters
-        if ($project_id == null) {
-            $orig = $this->getSystemSetting($counter_key) ?? 0;
-            $orig = is_numeric($orig) ? $orig * 1 : 0;
-            $this->setSystemSetting($counter_key, $orig + 1);
-            $new = $this->getSystemSetting($counter_key) ?? 0;
+        try {
+            if ($project_id == null) {
+                $orig = $this->getSystemSetting($counter_key) ?? 0;
+                $orig = is_numeric($orig) ? $orig * 1 : 0;
+                $this->setSystemSetting($counter_key, $orig + 1);
+                $new = $this->getSystemSetting($counter_key) ?? 0;
+            }
+            else {
+                $orig = $this->getProjectSetting($counter_key) ?? 0;
+                $orig = is_numeric($orig) ? $orig * 1 : 0;
+                $this->setProjectSetting($counter_key, $orig + 1);
+                $new = $this->getProjectSetting($counter_key) ?? 0;
+            }
         }
-        else {
-            $orig = $this->getProjectSetting($counter_key) ?? 0;
-            $orig = is_numeric($orig) ? $orig * 1 : 0;
-            $this->setProjectSetting($counter_key, $orig + 1);
-            $new = $this->getProjectSetting($counter_key) ?? 0;
+        catch (\Throwable $ex) {
+            $ex_msg = $ex->getMessage();
         }
 
         if ($project_id == null) {
@@ -125,6 +130,7 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
             "repeat_instance" => $repeat_instance,
             "page" => $page,
             "page_full" => $page_full,
+            "exception" => $ex_msg ?? '',
         );
     }
 
