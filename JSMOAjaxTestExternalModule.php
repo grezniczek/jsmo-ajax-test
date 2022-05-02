@@ -43,14 +43,11 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
         else {
             // Project page
             $page = PAGE;
-            if (
-                
-                (strpos(PAGE, "DataEntry/index.php") === false) // Not data entry form
-                &&
-                (strpos(PAGE, "surveys/index.php") === false) // Not survey page
-            ) {
-                $this->setupJSMO("Some project page [PID={$project_id}].");
-            }
+
+            if (strpos($page, "DataEntry/index.php") !== false) return; // Data Entry - handled elsewhere
+            if (strpos($page, "surveys/index.php") !== false && !isset($_GET["sq"])) return; // Surveys (but not Survey Queue) are handled elsewhere
+
+            $this->setupJSMO("Some project page [PID={$project_id}].");
         }
     }
 
