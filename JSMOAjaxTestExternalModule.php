@@ -87,7 +87,7 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     #region Handle Ajax Requests
 
-    function redcap_module_ajax($action, $payload, $project_id, $record, $instrument, $event_id, $group_id, $survey_hash, $response_id, $repeat_instance, $page, $page_full) {
+    function redcap_module_ajax($action, $payload, $project_id, $record, $instrument, $event_id, $group_id, $survey_hash, $response_id, $repeat_instance, $page, $page_full, $user_id) {
 
         $counter_key = "counter";
 
