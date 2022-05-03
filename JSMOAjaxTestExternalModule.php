@@ -72,7 +72,7 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
                         JSMO.ajax('test', data).then(function(data) {
                             console.log('Successful ajax request.', data);
                             // JSMO.log_legacy(data.msg, { para1: 1, para2: 2 })
-                            JSMO.log(data.msg, { para1: 1, para2: 2 })
+                            JSMO.log(data.msg, { para1: 1, record: '5' })
                         }).catch(function(err) {
                             console.error('Unsuccessful ajax request:', err);
                         });
