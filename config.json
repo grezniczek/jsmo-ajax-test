@@ -32,6 +32,13 @@
     ],
     "project-settings": [
     ],
+    "auth-jsmo-ajax-actions": [
+        "test"
+    ],
+    "noauth-jsmo-ajax-actions": [
+        "test"
+    ],
+    "enable-noauth-ajax-logging": true,
     "compatibility": {
         "php-version-min": "7.4.0",
         "php-version-max": "",
