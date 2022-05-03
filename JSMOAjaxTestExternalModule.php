@@ -71,6 +71,8 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
                         data.custom = custom;
                         JSMO.ajax('test', data).then(function(data) {
                             console.log('Successful ajax request.', data);
+                            JSMO.log_legacy(data.msg, { para1: 1, para2: 2 })
+                            JSMO.log(data.msg, { para1: 1, para2: 2 })
                         }).catch(function(err) {
                             console.error('Unsuccessful ajax request:', err);
                         });
@@ -133,6 +135,10 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
         );
     }
 
+
+    function redcap_module_is_noauth_log_allowed($message, $parameters, $project_id, $record, $instrument, $event_id, $repeat_instance, $survey_hash, $response_id, $survey_queue_hash, $page, $page_full) {
+        return true;
+    }
 
     #endregion
 
