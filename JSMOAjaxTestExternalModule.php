@@ -127,6 +127,7 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
             "repeat_instance" => $repeat_instance,
             "page" => $page,
             "page_full" => $page_full,
+            "user_id" => $user_id,
             "exception" => $ex_msg ?? '',
         );
     }
