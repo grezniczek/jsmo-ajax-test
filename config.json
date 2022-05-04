@@ -35,7 +35,7 @@
     "auth-jsmo-ajax-actions": [
         "test"
     ],
-    "noauth-jsmo-ajax-actions": [
+    "no-auth-jsmo-ajax-actions": [
         "test"
     ],
     "enable-ajax-logging": true,
