@@ -115,6 +115,7 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
         else {
             $msg = "Success in project {$project_id}! Counter from {$orig} to {$new}. Custom = {$payload["custom"]}";
         }
+        $log_id = $this->log("Some dummy logging from PHP");
         return array(
             "msg" => $msg,
             "action" => $action,
