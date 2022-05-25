@@ -136,7 +136,7 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
     }
 
 
-    function redcap_module_is_ajax_log_allowed($message, $parameters, $project_id, $record, $instrument, $event_id, $repeat_instance, $survey_hash, $response_id, $survey_queue_hash, $page, $page_full) {
+    function redcap_module_is_log_allowed($message, $parameters, $project_id, $record, $instrument, $event_id, $repeat_instance, $survey_hash, $response_id, $survey_queue_hash, $page, $page_full, $user_id, $group_id) {
         return rand(0,2) > 0; // 2 in 3 chance of succeeding
     }
 
