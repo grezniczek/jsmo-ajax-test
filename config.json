@@ -32,10 +32,10 @@
     ],
     "project-settings": [
     ],
-    "auth-jsmo-ajax-actions": [
+    "auth-ajax-actions": [
         "test"
     ],
-    "no-auth-jsmo-ajax-actions": [
+    "no-auth-ajax-actions": [
         "test"
     ],
     "enable-ajax-logging": true,
