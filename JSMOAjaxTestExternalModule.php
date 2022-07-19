@@ -74,11 +74,9 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
                         }).catch(function(err) {
                             console.error('Unsuccessful ajax request:', err);
                         });
-                        JSMO.log('Ajax log without record override', { para1: 1 }).catch(function(err) {
-                            console.log('Logging error: ', err)
-                        })
+                        JSMO.log('Ajax log without record override', { para1: 1 })
                         JSMO.log('Ajax log with record override', { para1: 2, record: '5' }).catch(function(err) {
-                            console.log('Logging error: ', err)
+                            // Do nothing
                         })
                     };
                     window.make_jsmo_request('Initial');
