@@ -150,4 +150,44 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     #endregion
 
+    #region Handle API Requests
+
+    function redcap_module_api($action, $payload, $project_id, $user_id, $format, $returnFormat) {
+
+
+        // throw new \Exception("Dummy");
+
+        $counter_key = "api_counter";
+
+        // Increment counters
+        try {
+            $orig = $this->getProjectSetting($counter_key) ?? 0;
+            $orig = is_numeric($orig) ? $orig * 1 : 0;
+            $this->setProjectSetting($counter_key, $orig + 1);
+            $new = $this->getProjectSetting($counter_key) ?? 0;
+        }
+        catch (\Throwable $ex) {
+            $ex_msg = $ex->getMessage();
+            return [ "status" => 500, "body" => $ex_msg ];
+        }
+
+        $msg = "Success in project {$project_id}! Counter updated from {$orig} to {$new}. Custom = {$payload["custom"]}";
+
+        if ($returnFormat == "json") {
+            return json_encode(["msg" => $msg], JSON_FORCE_OBJECT);
+        }
+        else if ($returnFormat == "xml") {
+            return '<?xml version="1.0" encoding="UTF-8" ?>' .
+                '<response>' .
+                '<msg><![CDATA['.$msg.']]></msg>' .
+                '</response>';
+        }
+        else {
+            return $msg;
+        }
+    }
+
+    #endregion
+
+
 }
