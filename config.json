@@ -19,10 +19,20 @@
     "enable-every-page-hooks-on-system-pages": true,
     "links": {
         "project": [
+            {
+                "name": "Plugin Test Page",
+                "key": "plugin",
+                "icon": "fas fa-plug",
+                "url": "plugin.php",
+                "show-header-and-footer": true
+            }
         ],
         "system": [
         ]
     },
+    "no-auth-pages": [
+        "plugin"
+    ],
     "system-settings": [
         {
             "key": "debug",
