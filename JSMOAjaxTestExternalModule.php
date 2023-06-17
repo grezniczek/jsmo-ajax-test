@@ -24,6 +24,10 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     #region Hooks
 
+    function redcap_module_link_check_display($project_id, $link) {
+        return $link;
+    }
+
     // Hook - Data Entry pages
     function redcap_data_entry_form ($project_id, $record = NULL, $instrument, $event_id, $group_id = NULL, $repeat_instance = 1) {
         $this->setupJSMO("Data Entry [PID={$project_id}].");
