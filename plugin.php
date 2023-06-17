@@ -30,7 +30,9 @@
             $dataOut.text(JSON.stringify(response, null, 2)).show();
         }).catch(function(err) {
             $errorOut.text(err).show();
-            JSMO.log(err);
+            JSMO.log('An ajax error occured', err).catch(function(err) {
+                console.error('Logging failed:', err);
+            });
         });
     });
 
