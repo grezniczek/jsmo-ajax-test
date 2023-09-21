@@ -1,7 +1,7 @@
 {
     "name": "JSMO Ajax Test",
     "namespace": "DE\\RUB\\JSMOAjaxTestExternalModule",
-    "description": "A REDCap EM for testing the general purpose JSMO.ajax() method.",
+    "description": "A REDCap EM for testing JSMO.ajax() and redcap_module_api().",
     "documentation": "README.md",
     "authors": [
         {

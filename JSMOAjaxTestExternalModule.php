@@ -8,21 +8,7 @@ use ExternalModules\Framework;
  */
 class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
-    /**
-     * EM Framework (tooling support)
-     * @var Framework
-     */
-    private $fw;
-
-    private $debug = false;
-
-    function __construct() {
-        parent::__construct();
-        $this->fw = $this->framework;
-        $this->debug = $this->fw->getSystemSetting("debug") == true;
-    }
-
-    #region Hooks
+    #region Hooks & JS Injection
 
     function redcap_module_link_check_display($project_id, $link) {
         return $link;
@@ -35,7 +21,7 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     // Hook - Survey pages
     function redcap_survey_page ($project_id, $record = NULL, $instrument, $event_id, $group_id = NULL, $survey_hash, $response_id = NULL, $repeat_instance = 1) {
-        $this->setupJSMO("Survey [PID={$project_id}].");
+        $this->setupJSMO("Survey [PID={$project_id}].", true);
     }
 
     // Hook - All pages
@@ -55,16 +41,15 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
         }
     }
 
-    #endregion
-
-
-    function setupJSMO($msg) {
-        $this->fw->initializeJavascriptModuleObject();
+    function setupJSMO($msg, $survey = false) {
+        $debug = $this->framework->getSystemSetting("debug") == true;
+        $this->framework->initializeJavascriptModuleObject();
         ?>
             <script>
                 ;(function() {
                     console.log(<?=json_encode($msg)?>);
-                    const JSMO = <?=$this->fw->getJavascriptModuleObjectName()?>;
+                    const isSurvey = <?=$survey ? "true" : "false"?>;
+                    const JSMO = <?=$this->framework->getJavascriptModuleObjectName()?>;
                     const data = {
                         one: 'One',
                         two: [
@@ -78,20 +63,22 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
                         }).catch(function(err) {
                             console.error('Module handling: Unsuccessful ajax request:', err);
                         });
-                        JSMO.log('Ajax log without record override', { para1: 1 })
-                        .then(function(data) {
-                            console.log('Called log() without record override. Response:', data)
-                        })
-                        .catch(function(err) {
-                            console.error('Error when calling log() without record override: ', err)
-                        })
-                        JSMO.log('Ajax log with record override', { para1: 2, record: '5' })
-                        .then(function(data) {
-                            console.log('Called log() with record override. Response: ', data)
-                        })
-                        .catch(function(err) {
-                            console.error('Error when calling log() with record override: ', err)
-                        })
+                        if (!isSurvey) {
+                            JSMO.log('Ajax log without record override', { para1: 1 })
+                            .then(function(data) {
+                                console.log('Called log() without record override. Response:', data)
+                            })
+                            .catch(function(err) {
+                                console.error('Error when calling log() without record override: ', err)
+                            })
+                            JSMO.log('Ajax log with record override', { para1: 2, record: '5' })
+                            .then(function(data) {
+                                console.log('Called log() with record override. Response: ', data)
+                            })
+                            .catch(function(err) {
+                                console.error('Error when calling log() with record override: ', err)
+                            })
+                        }
                     };
                     window.make_jsmo_request('Initial');
                 })();
@@ -99,6 +86,7 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
         <?php
     }
 
+    #endregion
 
     #region Handle Ajax Requests
 
