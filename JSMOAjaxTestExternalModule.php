@@ -42,6 +42,9 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
     }
 
     function setupJSMO($msg, $survey = false) {
+
+        return false; // OFF
+
         $debug = $this->framework->getSystemSetting("debug") == true;
         $this->framework->initializeJavascriptModuleObject();
         ?>
