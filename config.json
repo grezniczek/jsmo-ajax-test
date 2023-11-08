@@ -52,6 +52,9 @@
         "my_action",
         "test"
     ],
+    "no-auth-api-actions": [
+        "test"
+    ],
     "enable-ajax-logging": true,
     "enable-no-auth-logging": true,
     "compatibility": {

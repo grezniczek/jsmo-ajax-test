@@ -149,7 +149,6 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     function redcap_module_api($action, $payload, $project_id, $user_id, $format, $returnFormat) {
 
-
         // throw new \Exception("Dummy");
 
         $counter_key = "api_counter";
