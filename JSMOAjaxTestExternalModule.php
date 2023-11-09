@@ -153,19 +153,25 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
         $counter_key = "api_counter";
 
-        // Increment counters
-        try {
-            $orig = $this->getProjectSetting($counter_key) ?? 0;
-            $orig = is_numeric($orig) ? $orig * 1 : 0;
-            $this->setProjectSetting($counter_key, $orig + 1);
-            $new = $this->getProjectSetting($counter_key) ?? 0;
+        if ($project_id !== null) {
+            // Increment counters
+            try {
+                $orig = $this->getProjectSetting($counter_key) ?? 0;
+                $orig = is_numeric($orig) ? $orig * 1 : 0;
+                $this->setProjectSetting($counter_key, $orig + 1);
+                $new = $this->getProjectSetting($counter_key) ?? 0;
+            }
+            catch (\Throwable $ex) {
+                $ex_msg = $ex->getMessage();
+                return [ "status" => 500, "body" => $ex_msg ];
+            }
+    
+            $msg = "Success in project {$project_id}! Counter updated from {$orig} to {$new}. Custom = {$payload["custom"]}";
         }
-        catch (\Throwable $ex) {
-            $ex_msg = $ex->getMessage();
-            return [ "status" => 500, "body" => $ex_msg ];
+        else {
+            $msg = "Called '$action' in a non-project context";
         }
 
-        $msg = "Success in project {$project_id}! Counter updated from {$orig} to {$new}. Custom = {$payload["custom"]}";
 
         if ($returnFormat == "json") {
             return json_encode(["msg" => $msg], JSON_FORCE_OBJECT);
