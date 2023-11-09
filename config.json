@@ -49,16 +49,28 @@
         "test"
     ],
     "api-actions": [
-        "my_action",
-        "test"
+        "increment",
+        "file",
+        "error",
+        "exception"
     ],
     "no-auth-api-actions": [
-        "test"
+        "file",
+        "error",
+        "exception"
     ],
     "api-descriptions": [
         {
-            "action": "my_action",
+            "action": "increment",
             "description": "An action that increments a counter."
+        },
+        {
+            "action": "error",
+            "description": "Returns an error message."
+        },
+        {
+            "action": "exception",
+            "description": "Throws an exception. Is your error handling robust?"
         },
         {
             "action": "test",

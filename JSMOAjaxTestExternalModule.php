@@ -149,7 +149,20 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     function redcap_module_api($action, $payload, $project_id, $user_id, $format, $returnFormat) {
 
-        // throw new \Exception("Dummy");
+        if ($action == "exception") {
+            throw new \Exception($payload["msg"]);
+        }
+
+        if ($action == "error") {
+            return $this->framework->apiErrorResponse("My custom not found error message", 404);
+        }
+
+        if ($action == "file") {
+            // Send a file
+            $path = $this->framework->createTempFile();
+            file_put_contents($path, "Test file");
+            return $this->framework->apiFileResponse($path, "My file.txt", "text/plain");
+        }
 
         $counter_key = "api_counter";
 
@@ -163,7 +176,7 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
             }
             catch (\Throwable $ex) {
                 $ex_msg = $ex->getMessage();
-                return [ "status" => 500, "body" => $ex_msg ];
+                return $this->framework->apiErrorResponse($ex_msg);
             }
     
             $msg = "Success in project {$project_id}! Counter updated from {$orig} to {$new}. Custom = {$payload["custom"]}";
@@ -174,17 +187,16 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
 
         if ($returnFormat == "json") {
-            return json_encode(["msg" => $msg], JSON_FORCE_OBJECT);
+            $msg = json_encode(["msg" => $msg], JSON_FORCE_OBJECT);
         }
         else if ($returnFormat == "xml") {
-            return '<?xml version="1.0" encoding="UTF-8" ?>' .
+            $msg = '<?xml version="1.0" encoding="UTF-8" ?>' .
                 '<response>' .
                 '<msg><![CDATA['.$msg.']]></msg>' .
                 '</response>';
         }
-        else {
-            return $msg;
-        }
+
+        return $this->framework->apiResponse($msg);
     }
 
     #endregion
