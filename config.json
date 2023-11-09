@@ -55,6 +55,16 @@
     "no-auth-api-actions": [
         "test"
     ],
+    "api-descriptions": [
+        {
+            "action": "my_action",
+            "description": "An action that increments a counter."
+        },
+        {
+            "action": "test",
+            "description": "Some dummy action for testing. Can be called with or without authentication."
+        }
+    ],
     "enable-ajax-logging": true,
     "enable-no-auth-logging": true,
     "compatibility": {
