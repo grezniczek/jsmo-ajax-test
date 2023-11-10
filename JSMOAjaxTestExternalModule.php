@@ -147,7 +147,7 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     #region Handle API Requests
 
-    function redcap_module_api($action, $payload, $project_id, $user_id, $format, $returnFormat) {
+    function redcap_module_api($action, $payload, $project_id, $user_id, $format, $returnFormat, $csvDelim) {
 
         if ($action == "exception") {
             throw new \Exception($payload["msg"]);
@@ -187,16 +187,18 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
 
         if ($returnFormat == "json") {
-            $msg = json_encode(["msg" => $msg], JSON_FORCE_OBJECT);
+            return $this->framework->apiJsonResponse(["msg" => $msg]);
         }
         else if ($returnFormat == "xml") {
             $msg = '<?xml version="1.0" encoding="UTF-8" ?>' .
                 '<response>' .
                 '<msg><![CDATA['.$msg.']]></msg>' .
                 '</response>';
+            return $this->framework->apiResponse($msg);
         }
-
-        return $this->framework->apiResponse($msg);
+        else {
+            return $this->framework->apiCsvFileResponse(["Message" => [$msg]], "Message.csv", $csvDelim);
+        }
     }
 
     #endregion
