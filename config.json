@@ -52,7 +52,8 @@
         "increment",
         "file",
         "error",
-        "exception"
+        "exception",
+        "null"
     ],
     "no-auth-api-actions": [
         "file",

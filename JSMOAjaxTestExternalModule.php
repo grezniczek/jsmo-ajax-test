@@ -149,6 +149,10 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     function redcap_module_api($action, $payload, $project_id, $user_id, $format, $returnFormat, $csvDelim) {
 
+        if ($action == "null") {
+            return null;
+        }
+
         if ($action == "exception") {
             throw new \Exception($payload["msg"]);
         }
