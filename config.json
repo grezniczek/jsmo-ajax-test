@@ -60,7 +60,7 @@
         "error",
         "exception"
     ],
-    "api-descriptions": [
+    "api-action-descriptions": [
         {
             "action": "increment",
             "description": "An action that increments a counter."
