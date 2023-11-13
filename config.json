@@ -49,7 +49,7 @@
     "no-auth-ajax-actions": [
         "test"
     ],
-    "api-actions": [
+    "auth-api-actions": [
         "increment",
         "file",
         "error",
@@ -68,7 +68,7 @@
         },
         {
             "action": "error",
-            "description": "Returns an error message."
+            "description": "Returns an <b>error</b> message."
         },
         {
             "action": "exception",
