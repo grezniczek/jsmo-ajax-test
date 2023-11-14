@@ -54,7 +54,8 @@
         "file",
         "error",
         "exception",
-        "null"
+        "null",
+        "upload"
     ],
     "no-auth-api-actions": [
         "file",

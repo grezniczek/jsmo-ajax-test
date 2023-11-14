@@ -149,6 +149,13 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     function redcap_module_api($action, $payload, $project_id, $user_id, $format, $returnFormat, $csvDelim) {
 
+        if ($action == "upload") {
+            $doc_id = \REDCap::storeFile($payload["file"]["tmp_name"], $project_id, $payload["filename"]);
+            \REDCap::addFileToRepository($doc_id, $project_id, "Uploaded by EM API");
+
+            return $doc_id;
+        }
+
         if ($action == "null") {
             return null;
         }
