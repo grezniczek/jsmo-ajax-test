@@ -49,37 +49,36 @@
     "no-auth-ajax-actions": [
         "test"
     ],
-    "auth-api-actions": [
-        "increment",
-        "file",
-        "error",
-        "exception",
-        "null",
-        "upload"
-    ],
-    "no-auth-api-actions": [
-        "file",
-        "error",
-        "exception"
-    ],
-    "api-action-descriptions": [
-        {
-            "action": "increment",
-            "description": "An action that increments a counter."
+    "api-actions": {
+        "increment": {
+            "description": "An action that increments a counter.",
+            "access": ["auth"]
         },
-        {
-            "action": "error",
-            "description": "Returns an <b>error</b> message."
+        "error": {
+            "description": "Returns an <b>error</b> message.",
+            "access": ["auth", "no-auth"]
         },
-        {
-            "action": "exception",
-            "description": "Throws an exception. Is your error handling robust?"
+        "exception": {
+            "description": "Throws an exception. Is your error handling robust?",
+            "access": ["auth", "no-auth"]
         },
-        {
-            "action": "test",
-            "description": "Some dummy action for testing. Can be called with or without authentication."
+        "test": {
+            "description": "Some dummy action for testing. Can only be called without authentication.",
+            "access": ["auth", "no-auth"]
+        },
+        "file": {
+            "description": "An action that returns the contents of a file.",
+            "access": ["auth", "no-auth"]
+        },
+        "upload": {
+            "description": "An action that uploads a file.",
+            "access": ["auth"]
+        },
+        "null": {
+            "description": "An action that returns null.",
+            "access": ["auth", "no-auth"]
         }
-    ],
+    },
     "enable-ajax-logging": true,
     "enable-no-auth-logging": true,
     "compatibility": {
