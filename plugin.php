@@ -11,6 +11,9 @@
 <img src="<?=$img_src?>" alt="1">
 <hr>
 <button class="btn btn-sm btn-primary" data-action="ajax">Make AJAX request</button>
+<button class="btn btn-sm btn-primary" data-action="ajax-mult">Make multiple AJAX requests</button>
+<input id="mult" type="number" min="0" max="100" value="10" />
+<input type="checkbox" id="add-iteration"><label for="add-iteration">Add iteration</label>
 <pre data-output="data"></pre>
 <pre data-output="error"></pre>
 
@@ -26,7 +29,7 @@
     clear();
     $('button[data-action="ajax"]').on('click', function() {
         clear();
-        JSMO.ajax('test').then(function(response) {
+        JSMO.ajax('test', { 'n': 1, 'add-iteration': $('#add-iteration').is(':checked') ? 1 : 0 }).then(function(response) {
             $dataOut.text(JSON.stringify(response, null, 2)).show();
         }).catch(function(err) {
             $errorOut.text(err).show();
@@ -34,6 +37,20 @@
                 console.error('Logging failed:', err);
             });
         });
+    });
+    $('button[data-action="ajax-mult"]').on('click', function() {
+        clear();
+        const n = Math.max(1, parseInt($('#mult').val()));
+        for (let i = 0; i < n; i++) {
+            JSMO.ajax('test', { 'n': i, 'add-iteration': $('#add-iteration').is(':checked') ? 1 : 0 }).then(function(response) {
+                $dataOut.append('<p>' + i + ':<br>' + JSON.stringify(response, null, 2) + '</p>').show();
+            }).catch(function(err) {
+                $errorOut.append('<p>' + i + ':<br>' + err + '</p>').show();
+                JSMO.log('An ajax error occured', err).catch(function(err) {
+                    console.error('Logging failed:', err);
+                });
+            });
+        }
     });
 
 

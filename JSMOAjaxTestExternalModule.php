@@ -95,34 +95,49 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     function redcap_module_ajax($action, $payload, $project_id, $record, $instrument, $event_id, $repeat_instance, $survey_hash, $response_id, $survey_queue_hash, $page, $page_full, $user_id, $group_id) {
 
-        $counter_key = "counter";
-
-        // Increment counters
-        try {
-            if ($project_id == null) {
-                $orig = $this->getSystemSetting($counter_key) ?? 0;
-                $orig = is_numeric($orig) ? $orig * 1 : 0;
-                $this->setSystemSetting($counter_key, $orig + 1);
-                $new = $this->getSystemSetting($counter_key) ?? 0;
-            }
-            else {
-                $orig = $this->getProjectSetting($counter_key) ?? 0;
-                $orig = is_numeric($orig) ? $orig * 1 : 0;
-                $this->setProjectSetting($counter_key, $orig + 1);
-                $new = $this->getProjectSetting($counter_key) ?? 0;
-            }
-        }
-        catch (\Throwable $ex) {
-            $ex_msg = $ex->getMessage();
-        }
-
-        if ($project_id == null) {
-            $msg = "Success outside project context! Counter from {$orig} to {$new}. Custom = {$payload["custom"]}";
+        if ($action == "test") {
+            // make a large query to the database; query the redcap_log_view table for rows that contain the string $s in the column "event"
+            $s = "A";
+            $iteration = $payload["n"];
+            $addIteration = $payload["add-iteration"] == "1";
+            $sql = "SELECT * FROM redcap_log_view WHERE `event` LIKE '%$s%'";
+            if ($addIteration) {
+                $sql .= " -- Iteration $iteration";
+            }            
+            $result = $this->query($sql, []);
+            $n = $result->num_rows;
+            $msg = "$n rows returned.";
         }
         else {
-            $msg = "Success in project {$project_id}! Counter from {$orig} to {$new}. Custom = {$payload["custom"]}";
+            $counter_key = "counter";
+    
+            // Increment counters
+            try {
+                if ($project_id == null) {
+                    $orig = $this->getSystemSetting($counter_key) ?? 0;
+                    $orig = is_numeric($orig) ? $orig * 1 : 0;
+                    $this->setSystemSetting($counter_key, $orig + 1);
+                    $new = $this->getSystemSetting($counter_key) ?? 0;
+                }
+                else {
+                    $orig = $this->getProjectSetting($counter_key) ?? 0;
+                    $orig = is_numeric($orig) ? $orig * 1 : 0;
+                    $this->setProjectSetting($counter_key, $orig + 1);
+                    $new = $this->getProjectSetting($counter_key) ?? 0;
+                }
+            }
+            catch (\Throwable $ex) {
+                $ex_msg = $ex->getMessage();
+            }
+            if ($project_id == null) {
+                $msg = "Success outside project context! Counter from {$orig} to {$new}. Custom = {$payload["custom"]}";
+            }
+            else {
+                $msg = "Success in project {$project_id}! Counter from {$orig} to {$new}. Custom = {$payload["custom"]}";
+            }
+            $log_id = $this->log("Some dummy logging from PHP");
         }
-        $log_id = $this->log("Some dummy logging from PHP");
+
         return array(
             "msg" => $msg,
             "action" => $action,
