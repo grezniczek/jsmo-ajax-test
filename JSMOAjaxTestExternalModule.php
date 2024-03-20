@@ -95,6 +95,9 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     function redcap_module_ajax($action, $payload, $project_id, $record, $instrument, $event_id, $repeat_instance, $survey_hash, $response_id, $survey_queue_hash, $page, $page_full, $user_id, $group_id) {
 
+        if ($action == "error") {
+            throw new \Exception("This is an error");
+        }
         if ($action == "test") {
             // make a large query to the database; query the redcap_log_view table for rows that contain the string $s in the column "event"
             $s = "A";
@@ -103,10 +106,16 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
             $sql = "SELECT * FROM redcap_log_view WHERE `event` LIKE '%$s%'";
             if ($addIteration) {
                 $sql .= " -- Iteration $iteration";
-            }            
-            $result = $this->query($sql, []);
-            $n = $result->num_rows;
-            $msg = "$n rows returned.";
+            }        
+            try {
+                $result = $this->query($sql, []);
+                $n = $result->num_rows;
+                $msg = "$n rows returned.";
+            } 
+            catch(\Throwable $ex) {
+                $ex_msg = $ex->getMessage();
+                $msg = "FAILED";
+            }
         }
         else {
             $counter_key = "counter";

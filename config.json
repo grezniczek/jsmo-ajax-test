@@ -44,10 +44,12 @@
     "project-settings": [
     ],
     "auth-ajax-actions": [
-        "test"
+        "test",
+        "error"
     ],
     "no-auth-ajax-actions": [
-        "test"
+        "test",
+        "error"
     ],
     "api-actions": {
         "increment": {
