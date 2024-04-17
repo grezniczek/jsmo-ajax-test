@@ -8,6 +8,19 @@ use ExternalModules\Framework;
  */
 class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
+
+    function redcap_module_dashboard_before_render($project_id, $dash_id, &$dash_title, &$dash_body, $user) {
+        
+        $delayed = $this->isDelayedExecution();
+        if (!$delayed) {
+            $canDelay = $this->delayModuleExecution();
+        }
+        if (!$canDelay) {
+            $dash_title = "My Modified Title";
+        }
+    }
+
+
     #region Hooks & JS Injection
 
     function redcap_module_link_check_display($project_id, $link) {

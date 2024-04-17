@@ -11,12 +11,7 @@
         }
     ],
     "include-authors-in-api-info": true,
-    "framework-version": 11,
-    "permissions": [
-        "redcap_every_page_top",
-        "redcap_data_entry_form",
-        "redcap_survey_page"
-    ],
+    "framework-version": 12,
     "enable-every-page-hooks-on-system-pages": true,
     "links": {
         "project": [
