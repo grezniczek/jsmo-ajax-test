@@ -1,0 +1,27 @@
+### API Tests
+
+@token = 388DF984C4C0798C3CF9FA934E15B5EE
+
+
+POST https://dev-redcap/api/ HTTP/1.1
+content-type: application/x-www-form-urlencoded
+
+token={{token}}
+& format=json 
+& returnFormat=json
+& content=externalModule
+& prefix=jsmo_ajax_test
+& action=__info
+
+
+###
+
+POST https://dev-redcap/api/ HTTP/1.1
+content-type: application/x-www-form-urlencoded
+
+token={{token}}
+& format=json 
+& returnFormat=json
+& content=externalModule
+& prefix=jsmo_ajax_test
+& action=increment

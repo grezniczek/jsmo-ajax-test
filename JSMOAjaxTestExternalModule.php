@@ -11,13 +11,18 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
     function redcap_module_dashboard_before_render($project_id, $dash_id, &$dash_title, &$dash_body, $user) {
         
-        $delayed = $this->isDelayedExecution();
-        if (!$delayed) {
-            $canDelay = $this->delayModuleExecution();
-        }
-        if (!$canDelay) {
-            $dash_title = "My Modified Title";
-        }
+        // $delayed = $this->isDelayedExecution();
+        // if (!$delayed) {
+        //     $canDelay = $this->delayModuleExecution();
+        // }
+        // if (!$canDelay) {
+        //     $dash_title = "My Modified Title";
+        // }
+
+        $fwuser = $this->getUser();
+        $rights = $fwuser->getRights();
+        $pid = $this->getProjectId();
+        $pid_defined = defined("PROJECT_ID") ? PROJECT_ID : null;
     }
 
 
