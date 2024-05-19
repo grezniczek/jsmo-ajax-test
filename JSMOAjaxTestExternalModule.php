@@ -10,19 +10,21 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
 
 
     function redcap_module_dashboard_before_render($project_id, $dash_id, &$dash_title, &$dash_body, $user) {
-        
-        // $delayed = $this->isDelayedExecution();
-        // if (!$delayed) {
-        //     $canDelay = $this->delayModuleExecution();
-        // }
-        // if (!$canDelay) {
-        //     $dash_title = "My Modified Title";
-        // }
 
-        $fwuser = $this->getUser();
-        $rights = $fwuser->getRights();
-        $pid = $this->getProjectId();
-        $pid_defined = defined("PROJECT_ID") ? PROJECT_ID : null;
+        $dash_title .= " (JSMO Ajax Test)";
+        $dash_body .= "<p>This is from the JSMO Ajax Test module.</p>";
+
+        // $fwuser = $this->getUser();
+        // $rights = $fwuser->getRights();
+        // $pid = $this->getProjectId();
+        // $pid_defined = defined("PROJECT_ID") ? PROJECT_ID : null;
+    }
+
+    function redcap_pdf ($project_id, $metadata, $data, $instrument, $record, $event_id, $instance = 1) {
+        
+        $metadata[1]["element_label"] .= " (JSMO Ajax Test)";
+
+        return array('metadata'=>$metadata, 'data'=>$data);
     }
 
 
