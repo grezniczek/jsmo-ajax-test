@@ -35,17 +35,17 @@ class JSMOAjaxTestExternalModule extends AbstractExternalModule {
     }
 
     // Hook - Data Entry pages
-    function redcap_data_entry_form ($project_id, $record = NULL, $instrument, $event_id, $group_id = NULL, $repeat_instance = 1) {
+    function redcap_data_entry_form ($project_id, $record, $instrument, $event_id, $group_id, $repeat_instance) {
         $this->setupJSMO("Data Entry [PID={$project_id}].");
     }
 
     // Hook - Survey pages
-    function redcap_survey_page ($project_id, $record = NULL, $instrument, $event_id, $group_id = NULL, $survey_hash, $response_id = NULL, $repeat_instance = 1) {
+    function redcap_survey_page ($project_id, $record, $instrument, $event_id, $group_id, $survey_hash, $response_id, $repeat_instance) {
         $this->setupJSMO("Survey [PID={$project_id}].", true);
     }
 
     // Hook - All pages
-    function redcap_every_page_top($project_id = null) {
+    function redcap_every_page_top($project_id) {
         if ($project_id == null) {
             // System page
             $this->setupJSMO("System page");
