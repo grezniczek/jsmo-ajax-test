@@ -5,6 +5,7 @@
     $module->initializeJavascriptModuleObject();
     $jsmo_name = $module->getJavascriptModuleObjectName();
 
+	$module->loadREDCapJS();
 ?>
 <h4>Plugin Test Page</h4>
 <p>The image source is: <b><?=htmlspecialchars($img_src)?></b></p>

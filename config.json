@@ -19,8 +19,7 @@
                 "name": "Plugin Test Page",
                 "key": "plugin",
                 "icon": "fas fa-plug",
-                "url": "plugin.php",
-                "show-header-and-footer": true
+                "url": "plugin.php"
             }
         ],
         "system": [
